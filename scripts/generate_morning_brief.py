@@ -62,9 +62,9 @@ SOURCE_ORDER = [
     "光明日报",
     "经济日报",
     "学习强国",
-    "广东发布/广东省政府",
-    "百千万工程",
-    "粤港澳大湾区",
+    "上海发布/上海市政府",
+    "五个中心建设",
+    "长三角一体化",
     "南方周末",
     "澎湃新闻",
     "专题",
@@ -162,9 +162,9 @@ def tags_for(title: str, source: str, category: str) -> list[str]:
         ("法治治理", r"法治|法律|条例|规定|征求意见|安全生产|监管|法院|检察"),
         ("民生社会", r"民生|就业|养老|医保|教育|高考|暑期|住房|卫生|健康|群众"),
         ("生态文明", r"生态|美丽中国|环保|绿色|水库|水网|自然保护区"),
-        ("乡村振兴", r"乡村|三农|县镇村|农村|农民|农业|百千万|县域"),
-        ("广东省情", r"广东|广州|深圳|珠海|横琴|前海|湛江|惠州|阳江|粤"),
-        ("大湾区", r"粤港澳|大湾区|港澳|香港|澳门|琴澳|跨境"),
+        ("乡村振兴", r"乡村|三农|县镇村|农村|农民|农业|县域"),
+        ("上海市情", r"上海|浦东|虹桥|临港|黄浦|徐汇|长宁|静安|普陀|虹口|杨浦|闵行|宝山|嘉定|金山|松江|青浦|奉贤|崇明"),
+        ("长三角一体化", r"长三角|一体化|沪苏浙皖|虹桥|跨省|毗邻"),
         ("国际关系", r"国际|全球|中欧|外交|世界|联合国|秘鲁|黑山|哥伦比亚|人类命运共同体"),
         ("申论素材", r".*"),
     ]
@@ -185,8 +185,8 @@ def summary_for(title: str, source: str, category: str) -> str:
         return "涉及“十五五”时期政策部署和重点任务，适合作为政策文件、长期治理和申论大作文素材。"
     if re.search(r"党建|党员|党组织|从严治党|县委书记|政绩观|基层党组织|七一", title):
         return "围绕党的建设、干部队伍和基层治理展开，适合行政职业能力与申论政治素养积累。"
-    if re.search(r"广东|粤港澳|大湾区|百千万|县镇村|乡村|县域", title):
-        return "聚焦广东省情、区域协调和城乡融合，可纳入广东公考地方治理案例库。"
+    if re.search(r"上海|长三角|五个中心|浦东|临港|新城", title):
+        return "聚焦上海市情、五个中心建设和长三角一体化，可纳入上海公考地方治理案例库。"
     if re.search(r"经济|物流|产业|投资|资本|服务业|消费|外贸|财金", title):
         return "关注宏观经济运行、产业政策和市场活力，可用于经济治理与高质量发展考点。"
     if re.search(r"法治|条例|规定|征求意见|安全|监管", title):
@@ -310,8 +310,8 @@ def scrape_newspaper_layouts(
 def manual_fallbacks(items: list[Article]):
     fallbacks = [
         ("学习强国", "思想学习", "学习强国首页重点时政内容", "https://www.xuexi.cn/", TODAY, "学习强国首页动态加载，保留官方入口。"),
-        ("百千万工程", "广东省情", "为纵深推进“百千万工程”，激活乡村数字化转型内生动力", "https://search.gd.gov.cn/search/mall/190?keywords=&position=all&recommand=0&timeRange=month", "最新", "广东政府站内检索结果，需点开核验具体条目。"),
-        ("百千万工程", "广东省情", "百千万工程新闻专题", "https://m.nfnews.com/baiqianwangongcheng", "最新", "南方+专题入口，适合持续跟踪县域、镇村和产业案例。"),
+        ("五个中心建设", "上海市情", "上海推进国际经济、金融、贸易、航运、科技创新中心建设", "https://www.shanghai.gov.cn/nw12344/", "最新", "上海市政府要闻动态，需点开核验具体条目。"),
+        ("五个中心建设", "上海市情", "上海三大先导产业：人工智能、生物医药、集成电路", "https://www.shanghai.gov.cn/nw12344/", "最新", "上海重点产业布局与政策动态，适合持续跟踪。"),
         ("专题", "重点专题", "深入学习贯彻习近平党建思想", "https://www.news.cn/politics/", "最新", "新华社/求是等站点共同设置的重点专题。"),
         ("专题", "重点专题", "树立和践行正确政绩观", "https://www.news.cn/", "最新", "适合公考申论长期积累。"),
     ]
@@ -323,8 +323,8 @@ def manual_fallbacks(items: list[Article]):
                 ("学习强国", "思想学习", "时政新闻眼｜奋力创造新的历史辉煌，习近平在这场大会上发出伟大号召", "https://www.xuexi.cn/lgpage/detail/index.html?id=580489911491325356&item_id=580489911491325356", "2026-07-02", ""),
                 ("学习强国", "思想学习", "习近平：树立和践行正确政绩观", "https://www.xuexi.cn/lgpage/detail/index.html?id=12692875264152946488&item_id=12692875264152946488", "最新", ""),
                 ("学习强国", "思想学习", "确保基本实现社会主义现代化取得决定性进展", "https://www.xuexi.cn/lgpage/detail/index.html?id=12339445077807632775&item_id=12339445077807632775", "最新", ""),
-                ("百千万工程", "广东省情", "“看广东·遇‘鉴’乡村之美”主题新闻发布活动（佛山站）", "https://gdio.southcn.com/node_12c3fd58e7", "2026-07-02", "广东省政府新闻办公室活动回顾，聚焦佛山推进百千万工程成效。"),
-                ("百千万工程", "广东省情", "看得见的变化，摸得着的幸福", "https://static.nfnews.com/content/202606/22/c12549899.html", "2026-06-22", "南方评论梳理广东百千万工程实施成效，适合补充案例。"),
+                ("五个中心建设", "上海市情", "上海发布进一步深化国际科技创新中心建设的若干意见", "https://www.shanghai.gov.cn/nw12344/", "2026-07-02", "上海市政府政策动态，聚焦科创中心建设举措。"),
+                ("五个中心建设", "上海市情", "临港新片区推进高水平制度型开放成效显著", "https://www.shanghai.gov.cn/nw12344/", "2026-06-22", "临港新片区制度创新与产业落地成效，适合补充案例。"),
                 ("专题", "重点专题", "旅游强国建设“十五五”规划", "https://www.gov.cn/zhengce/content/202607/content_7074516.htm", "2026-07-07", ""),
                 ("专题", "重点专题", "美丽中国建设“十五五”规划", "https://www.gov.cn/zhengce/content/202607/content_7074199.htm", "2026-07-03", ""),
             ]
@@ -357,7 +357,7 @@ def score(item: Article) -> int:
         (10, r"十五五|规划|批复|美丽中国|旅游强国"),
         (9, r"科技强国|科技自立自强|新质生产力|人工智能|基础研究"),
         (8, r"党建|党组织|从严治党|县委书记|政绩观"),
-        (8, r"广东|粤港澳|大湾区|百千万|县域|乡村"),
+        (8, r"上海|长三角|五个中心|浦东|临港|新城"),
         (7, r"经济|物流|服务业|产业|投资|营商"),
         (6, r"法治|条例|监管|安全"),
     ]
@@ -371,8 +371,8 @@ def score(item: Article) -> int:
         "中国政府网": 6,
         "求是": 5,
         "经济日报": 4,
-        "广东发布/广东省政府": 5,
-        "粤港澳大湾区": 4,
+        "上海发布/上海市政府": 5,
+        "长三角一体化": 4,
     }
     return points + source_bonus.get(item.source, 0)
 
@@ -386,9 +386,9 @@ def top_items(items: list[Article], limit: int = 10) -> list[Article]:
         r"美丽中国建设“十五五”规划",
         r"从四个新数据读懂上半年中国经济|物流业景气指数",
         r"习近平：做焦裕禄式的县委书记",
-        r"孟凡利在广州调研人工智能产业发展|AI向实",
-        r"粤港澳大湾区打造开放协同创新网络|破壁、搭桥、共生",
-        r"百千万工程|看广东·遇",
+        r"上海推进人工智能产业发展|世界人工智能大会|WAIC|三大先导产业",
+        r"长三角一体化打造协同创新网络|虹桥国际开放枢纽|五个中心",
+        r"五个中心建设|上海科创中心",
     ]
     selected = []
     used = set()
@@ -468,7 +468,7 @@ def render_markdown(items: list[Article], top: list[Article]) -> str:
             "- 科技强国：高水平科技自立自强，基础研究、人工智能、新质生产力与现代化产业体系。",
             "- 十五五规划：旅游强国、美丽中国、教育、应急等规划文件体现中长期政策连续性。",
             "- 党建干部：正确政绩观、县委书记能力建设、全面从严治党、基层治理现代化。",
-            "- 广东省情：百千万工程、县域高质量发展、人工智能产业应用和粤港澳大湾区协同创新。",
+            "- 上海市情：五个中心建设、三大先导产业、临港新片区和长三角一体化协同发展。",
             "- 经济治理：物流景气、服务业扩能提质、投资和耐心资本，注意从数据读趋势。",
             "- 法治政府：政策文件、条例、监管和征求意见稿，体现依法行政与制度供给。",
         ]
@@ -800,7 +800,7 @@ def render_html(items: list[Article], top: list[Article]) -> str:
           <li>科技强国：高水平科技自立自强，基础研究、人工智能、新质生产力与现代化产业体系。</li>
           <li>十五五规划：旅游强国、美丽中国、教育、应急等规划文件体现中长期政策连续性。</li>
           <li>党建干部：正确政绩观、县委书记能力建设、全面从严治党、基层治理现代化。</li>
-          <li>广东省情：百千万工程、县域高质量发展、人工智能产业应用和粤港澳大湾区协同创新。</li>
+          <li>上海市情：五个中心建设、三大先导产业、临港新片区和长三角一体化协同发展。</li>
           <li>经济治理：物流景气、服务业扩能提质、投资和耐心资本，注意从数据读趋势。</li>
         </ul>
       </section>
@@ -955,39 +955,39 @@ def collect_items() -> list[Article]:
     )
     scrape_anchor_page(
         items,
-        "广东发布/广东省政府",
-        "广东要闻",
-        "https://www.gd.gov.cn/gdywdt/gdyw/",
+        "上海发布/上海市政府",
+        "上海要闻",
+        "https://www.shanghai.gov.cn/nw12344/",
         limit=24,
         default_date="最新",
-        href_pattern=r"gd\.gov\.cn/.+content/post_",
+        href_pattern=r"shanghai\.gov\.cn/.+content/",
     )
     scrape_anchor_page(
         items,
-        "粤港澳大湾区",
+        "长三角一体化",
         "最新动态",
-        "https://www.cnbayarea.org.cn/news/focus/",
+        "https://www.shio.gov.cn/nw-sh/iic.html",
         limit=20,
         default_date="最新",
-        href_pattern=r"cnbayarea\.org\.cn/.+/content/post_",
+        href_pattern=r"shio\.gov\.cn/.+content/",
         verify=False,
     )
     scrape_anchor_page(
         items,
-        "粤港澳大湾区",
+        "长三角一体化",
         "首页头条",
-        "http://www.cnbayarea.org.cn/",
+        "https://www.shio.gov.cn/",
         limit=12,
         default_date="最新",
-        href_pattern=r"cnbayarea\.org\.cn/.+/content/post_",
+        href_pattern=r"shio\.gov\.cn/.+content/",
     )
     manual_fallbacks(items)
 
     filtered = []
     for item in items:
-        # Keep the briefing focused on politics, policy, governance, economy and Guangdong.
+        # Keep the briefing focused on politics, policy, governance, economy and Shanghai.
         if item.source in {"南方周末", "澎湃新闻"} and not re.search(
-            r"习近平|防汛|治理|教育|经济|政策|时政|广东|深圳|基础研究|安全|考研|供水|国台办|长三角|曲靖|历史上的今天",
+            r"习近平|防汛|治理|教育|经济|政策|时政|上海|浦东|基础研究|安全|考研|供水|国台办|长三角|曲靖|历史上的今天",
             item.title,
         ):
             continue
